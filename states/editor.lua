@@ -4,6 +4,8 @@ local map    = require("objects.map")
 local ts     = require("utils.tileSelector")
 local blink  = 0
 
+local debug  = false
+
 function editor.init()
 
 end
@@ -11,21 +13,23 @@ end
 function editor.load()
   map.Init()
   ts.Init(map.MAPSIZEWIDTH * map.TILESIZEWIDTH + 200, 5)
+  debug = false
 end
 
 function editor.draw()
-  love.graphics.setFont(fontXXL)
-  love.graphics.print("EDITOR", ts.x, ts.y + 5)
-  map.Draw()
-  ts.Draw()
+  if not debug then
+    love.graphics.setFont(fontXXL)
+    love.graphics.setColor(Color.RAYWHITE)
+    love.graphics.print("EDITOR", ts.x, ts.y + 5)
+    map.Draw()
+    ts.Draw()
 
-  if blink > 0 then
-    r, g, b = love.graphics.getColor()
-    love.graphics.setColor(255, 255, 255)
-    love.graphics.rectangle("fill", 0, 0, 400, 60)
-    love.graphics.setColor(0, 0, 0)
-   
-    love.graphics.setColor(r, g, b)
+    if blink > 0 then
+      love.graphics.setColor(Color.WHITE)
+      love.graphics.rectangle("fill", 0, 0, 400, 60)
+    end
+  else
+    ts.DrawQuads()
   end
 end
 
@@ -46,6 +50,9 @@ function editor.keypressed(key)
   if key == "escape" then
     state = require("states.menu")
     state.load()
+  end
+  if key == "space" then
+    debug = not debug
   end
 end
 

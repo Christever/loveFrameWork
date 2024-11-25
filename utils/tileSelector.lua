@@ -52,17 +52,45 @@ function tileSelector.Click(pX, pY)
     end
 end
 
+function tileSelector.DrawQuads()
+    local oldFont = love.graphics.getFont()
+    love.graphics.setFont(fontSmall)
+    love.graphics.push()
+    love.graphics.setBackgroundColor(Color.RAYWHITE)
+    local x, y = 0, 0
+    for n = 1, #map.quads do
+        x = x + 34
+        love.graphics.draw(map.image, map.quads[n], x, y )
+        love.graphics.setColor(Color.BLACK)
+        love.graphics.print(tostring(n), x, y + 30)
+        love.graphics.setColor(Color.WHITE)
+        if x > 1800 - map.TILESIZEWIDTH then
+            x = 0
+            y = y + map.TILESIZEHEIGHT + 30
+        end
+    end
+    
+    love.graphics.pop()
+    
+    love.graphics.setFont(oldFont)
+
+
+end
+
 function tileSelector.Draw()
-    -- love.graphics.print("TILE SELECTOR", tileSelector.x, tileSelector.y)
     local x = tileSelector.x + tileSelector.decalageX + tileSelector.marginX
     local y = tileSelector.y + tileSelector.decalageY + tileSelector.marginY
     local c = 1
+    local oldFont = love.graphics.getFont()
+    love.graphics.push()
+    love.graphics.setFont(fontSmall)
+    love.graphics.setBackgroundColor(Color.BLACK)
     for q = 1, #tileSelector.tiles do
         local id = tileSelector.tiles[q]
-        love.graphics.setColor(255, 255, 255, 255)
+        love.graphics.setColor(Color.WHITE)
         if tileSelector.tiles[q] == tileSelector.currentTile then
             if blinckFlag then
-                love.graphics.setColor(255, 126, 126, 200)
+                love.graphics.setColor(Color.BLANK)
             end
         end
         love.graphics.draw(map.image, map.quads[id], x, y)
@@ -74,7 +102,8 @@ function tileSelector.Draw()
             c = 1
         end
     end
-    love.graphics.setColor(255, 255, 255, 255)
+    love.graphics.pop()
+    love.graphics.setFont(oldFont)
 end
 
 function tileSelector.Update(dt)
@@ -90,10 +119,7 @@ end
 ---@param y number
 ---@param pTile number
 function tileSelector.ChangeTile(x, y, pTile)
-    -- local col, lig = map.PixelToMap(x+map.decalageX, y+map.decalageY)
-    local col = math.floor((x - map.decalageX) / map.TILESIZEWIDTH) + 1
-    local lig = math.floor((y - map.decalageY) / map.TILESIZEHEIGHT) + 1
-
+    local col, lig = map.PixelToMap(x-map.decalageX, y-map.decalageY)
     if col >= 1 and col <= map.MAPSIZEWIDTH and lig >= 1 and lig <= map.MAPSIZEHEIGHT then
         map.grid[lig][col] = pTile
     end

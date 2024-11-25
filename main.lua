@@ -1,10 +1,11 @@
 io.stdout:setvbuf("no")
 love.graphics.setDefaultFilter("nearest", "nearest")
+require("Reg")
 
 function love.load()
   love.window.setMode(1400, 1024)
   love.window.setFullscreen(true)
-  state=require "states.menu"
+  state = require "states.menu"
   state.load()
 end
 
