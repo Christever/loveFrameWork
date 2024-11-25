@@ -21,6 +21,7 @@ map.currentLevel   = 1
 function map.Init()
     map.Reset()
     map.quads = map.Quads()
+    map.Load()
 end
 
 --- Dessine la carte
@@ -90,6 +91,18 @@ function map.MapToPixel(c, l)
     local x = ((c - 1) * map.TILESIZEWIDTH)
     local y = ((l - 1) * map.TILESIZEHEIGHT)
     return x, y
+end
+
+function map.Load()
+    map.Reset()
+    local fileName = "maps/level_" .. tostring(map.currentLevel) .. ".json"
+    local file = io.open(fileName, "r")
+    if file ~= nil then
+        local formatJSON = file:read()
+        local formatLUA  = json:decode(formatJSON)
+        map.grid = formatLUA.grid
+    end
+
 end
 
 function map.Save()
