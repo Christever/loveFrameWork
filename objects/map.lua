@@ -100,9 +100,9 @@ function map.Load()
     if file ~= nil then
         local formatJSON = file:read()
         local formatLUA  = json:decode(formatJSON)
-        map.grid = formatLUA.grid
+        ---@diagnostic disable-next-line: need-check-nil
+        map.grid         = formatLUA.grid
     end
-
 end
 
 function map.Save()

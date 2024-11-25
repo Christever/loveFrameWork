@@ -66,4 +66,8 @@ function menu.keypressed(key)
   end
 end
 
+function menu.mousepressed(x,y,btn)
+  
+end
+
 return menu

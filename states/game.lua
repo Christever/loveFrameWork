@@ -28,7 +28,7 @@ function game.keypressed(key)
 end
 
 function game.mousepressed(x,y, btn)
-  state.mousepressed(x,y, btn)
+  
 end
 
 return game
