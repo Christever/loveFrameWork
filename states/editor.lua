@@ -1,10 +1,15 @@
-local editor = {}
+local editor  = {}
 
-local map    = require("objects.map")
-local ts     = require("utils.tileSelector")
-local blink  = 0
+local map     = require("objects.map")
+local ts      = require("utils.tileSelector")
+local blink   = 0
+local message = ""
+local debug   = false
 
-local debug  = false
+function Message(pMessage)
+  message = pMessage
+  blink   = 2
+end
 
 function editor.init()
 
@@ -23,10 +28,13 @@ function editor.draw()
     love.graphics.print("EDITOR", ts.x, ts.y + 5)
     map.Draw()
     ts.Draw()
-
     if blink > 0 then
-      love.graphics.setColor(Color.WHITE)
-      love.graphics.rectangle("fill", 0, 0, 400, 60)
+      r, g, b = love.graphics.getColor()
+      love.graphics.setColor(Color.GRAY)
+      love.graphics.rectangle("fill", 0, 0, 800, 90)
+      love.graphics.setColor(Color.GREEN)
+      love.graphics.printf(message, map.decalageX, 2, 900, "center")
+      love.graphics.setColor(r, g, b)
     end
   else
     ts.DrawQuads()
@@ -34,15 +42,19 @@ function editor.draw()
 end
 
 function editor.update(dt)
-  local x, y = love.mouse.getPosition()
-  if love.mouse.isDown(1) then
-    ts.ChangeTile(x, y, ts.currentTile)
-  elseif love.mouse.isDown(2) then
-    ts.ChangeTile(x, y, 0)
-  end
-  ts.Update(dt)
   if blink > 0 then
     blink = blink - dt
+  else
+    local x, y = love.mouse.getPosition()
+    if love.mouse.isDown(1) then
+      ts.ChangeTile(x, y, ts.currentTile)
+    elseif love.mouse.isDown(2) then
+      ts.ChangeTile(x, y, 0)
+    end
+    ts.Update(dt)
+    if blink > 0 then
+      blink = blink - dt
+    end
   end
 end
 
@@ -53,6 +65,10 @@ function editor.keypressed(key)
   end
   if key == "space" then
     debug = not debug
+  end
+  if key == "s" then
+    map.Save()
+    Message("SAUVEGARDE EFFECTUEE")
   end
 end
 

@@ -1,4 +1,7 @@
 local map          = {}
+
+local json         = require("utils.JSON2")
+
 map.MAPSIZEWIDTH   = 32 -- Largeur de la carte
 map.MAPSIZEHEIGHT  = 32 -- Hauteur de la carte
 map.TILESIZEWIDTH  = 32 -- Largeur des tiles
@@ -8,7 +11,11 @@ map.image          = love.graphics.newImage("assets/images/chips01.png")
 map.quads          = {}
 map.grid           = {}
 map.decalageX      = 30 -- Decalage affichage de la map sur les X
-map.decalageY      = 50  -- Decalage affichage de la map sur les Y
+map.decalageY      = 50 -- Decalage affichage de la map sur les Y
+
+map.currentLevel   = 1
+
+
 
 --- Initialisation de la carte
 function map.Init()
@@ -70,7 +77,7 @@ end
 ---@return integer
 function map.PixelToMap(x, y)
     local c = math.floor((x) / map.TILESIZEWIDTH) + 1
-    local l = math.floor((y ) / map.TILESIZEHEIGHT) + 1
+    local l = math.floor((y) / map.TILESIZEHEIGHT) + 1
     return c, l
 end
 
@@ -80,9 +87,26 @@ end
 ---@return integer
 ---@return integer
 function map.MapToPixel(c, l)
-    local x = ((c - 1) * map.TILESIZEWIDTH) 
+    local x = ((c - 1) * map.TILESIZEWIDTH)
     local y = ((l - 1) * map.TILESIZEHEIGHT)
     return x, y
+end
+
+function map.Save()
+    local toSave = {
+        grid           = map.grid,
+        tileSizeWIdth  = map.TILESIZEWIDTH,
+        tileSizeHeight = map.TILESIZEHEIGHT,
+        mapWidth       = map.MAPSIZEWIDTH,
+        mapHeight      = map.MAPSIZEHEIGHT
+    }
+    local formatJSON = json:encode(toSave)
+    local fileName = "maps/level_" .. map.currentLevel .. ".json"
+    local file = io.open(fileName, "w")
+    ---@diagnostic disable-next-line: need-check-nil
+    file:write(formatJSON)
+    ---@diagnostic disable-next-line: need-check-nil
+    file:close()
 end
 
 return map
