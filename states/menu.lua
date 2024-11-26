@@ -28,12 +28,6 @@ local menuEntries = {
 }
 
 function menu.load()
-  fontSmall  = love.graphics.newFont("assets/fonts/PixelMaster.ttf", 24)
-  fontMedium = love.graphics.newFont("assets/fonts/PixelMaster.ttf", 36)
-  fontLarge  = love.graphics.newFont("assets/fonts/PixelMaster.ttf", 48)
-  fontXXL    = love.graphics.newFont("assets/fonts/PixelMaster.ttf", 64)
-
-
   menuSelection = 1
   ScreenWidth   = love.graphics.getWidth()
   ScreenHeight  = love.graphics.getHeight()
@@ -45,6 +39,8 @@ end
 
 function menu.draw()
   love.graphics.setFont(fontMedium)
+  love.graphics.setBackgroundColor(Color.BLACK)
+  love.graphics.setColor(Color.WHITE)
   for i = 1, #menuEntries do
     if i == menuSelection then
       love.graphics.print(">", 250, 250 + i * 50)

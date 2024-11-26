@@ -14,8 +14,8 @@ tileSelector.marginY     = 16
 tileSelector.columns     = 6
 
 -- Tiles slectionnables
-tileSelector.tiles       =
-{ 17, 18, 19, 20, 21, 22, 23, 24, 34, 58, 59, 60, 321, 322, 323, 324 }
+tileSelector.tiles       = { 17, 18, 19, 20, 21, 22, 23, 24, 34, 58, 59, 60, 321, 322, 323, 324 }
+tileSelector.solid       = {}
 
 tileSelector.currentTile = tileSelector.tiles[1]
 
@@ -64,7 +64,7 @@ function tileSelector.DrawQuads()
         love.graphics.setColor(Color.BLACK)
         love.graphics.print(tostring(n), x, y + 30)
         love.graphics.setColor(Color.WHITE)
-        if x > 1800 -TILE_WIDTH then
+        if x > 1800 - TILE_WIDTH then
             x = 0
             y = y + TILE_HEIGHT + 30
         end

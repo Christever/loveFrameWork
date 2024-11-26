@@ -29,8 +29,9 @@ Color = {
 }
 
 
-MAP_WIDTH   = 32
-MAP_HEIGHT  = 32
+MAP_WIDTH      = 32
+MAP_HEIGHT     = 32
 
-TILE_WIDTH  = 32
-TILE_HEIGHT = 32
+TILE_WIDTH     = 32
+TILE_HEIGHT    = 32
+
