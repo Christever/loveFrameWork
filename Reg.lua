@@ -23,7 +23,14 @@ Color = {
 
     WHITE      = { 255, 255, 255, 255 },
     BLACK      = { 0, 0, 0, 255 },
-    BLANK      = { 0, 0, 0, 0},
+    BLANK      = { 0, 0, 0, 0 },
     MAGENTA    = { 255, 0, 255, 255 },
     RAYWHITE   = { 245, 245, 245, 255 },
 }
+
+
+MAP_WIDTH   = 32
+MAP_HEIGHT  = 32
+
+TILE_WIDTH  = 32
+TILE_HEIGHT = 32

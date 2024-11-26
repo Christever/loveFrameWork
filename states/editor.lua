@@ -17,7 +17,7 @@ end
 
 function editor.load()
   map.Init()
-  ts.Init(map.MAPSIZEWIDTH * map.TILESIZEWIDTH + 200, 5)
+  ts.Init(MAP_WIDTH * TILE_WIDTH + 200, 5)
   debug = false
 end
 

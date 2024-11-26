@@ -2,10 +2,6 @@ local map          = {}
 
 local json         = require("utils.JSON2")
 
-map.MAPSIZEWIDTH   = 32 -- Largeur de la carte
-map.MAPSIZEHEIGHT  = 32 -- Hauteur de la carte
-map.TILESIZEWIDTH  = 32 -- Largeur des tiles
-map.TILESIZEHEIGHT = 32 -- Hauteur des tiles
 
 map.image          = love.graphics.newImage("assets/images/chips01.png")
 map.quads          = {}
@@ -26,8 +22,8 @@ end
 
 --- Dessine la carte
 function map.Draw()
-    for l = 1, map.MAPSIZEHEIGHT do
-        for c = 1, map.MAPSIZEWIDTH do
+    for l = 1, MAP_HEIGHT do
+        for c = 1, MAP_WIDTH do
             local x, y = map.MapToPixel(c, l)
             local id = map.grid[l][c]
             love.graphics.draw(map.image, map.quads[33], x + map.decalageX, y + map.decalageY)
@@ -40,9 +36,9 @@ end
 
 --- Reset de la map
 function map.Reset()
-    for l = 1, map.MAPSIZEHEIGHT do
+    for l = 1, MAP_HEIGHT do
         map.grid[l] = {}
-        for c = 1, map.MAPSIZEWIDTH do
+        for c = 1, MAP_HEIGHT do
             map.grid[l][c] = 33 -- Tile par défaut
         end
     end
@@ -55,17 +51,17 @@ function map.Quads()
     local x, y    = 0, 0
     local width   = map.image:getWidth()
     local height  = map.image:getHeight()
-    local nbQuads = (width / map.TILESIZEWIDTH) * (height / map.TILESIZEHEIGHT)
+    local nbQuads = (width / TILE_WIDTH) * (height / TILE_HEIGHT)
     for q = 1, nbQuads do
         quads[q] = love.graphics.newQuad(
             x, y,
-            map.TILESIZEWIDTH, map.TILESIZEHEIGHT,
+            TILE_WIDTH, TILE_HEIGHT,
             width, height
         )
-        x = x + map.TILESIZEWIDTH
+        x = x + TILE_WIDTH
         if x >= width then
             x = 0
-            y = y + map.TILESIZEHEIGHT
+            y = y + TILE_HEIGHT
         end
     end
     return quads
@@ -77,8 +73,8 @@ end
 ---@return integer
 ---@return integer
 function map.PixelToMap(x, y)
-    local c = math.floor((x) / map.TILESIZEWIDTH) + 1
-    local l = math.floor((y) / map.TILESIZEHEIGHT) + 1
+    local c = math.floor((x) / TILE_WIDTH) + 1
+    local l = math.floor((y) / TILE_HEIGHT) + 1
     return c, l
 end
 
@@ -88,8 +84,8 @@ end
 ---@return integer
 ---@return integer
 function map.MapToPixel(c, l)
-    local x = ((c - 1) * map.TILESIZEWIDTH)
-    local y = ((l - 1) * map.TILESIZEHEIGHT)
+    local x = ((c - 1) * TILE_WIDTH)
+    local y = ((l - 1) * TILE_HEIGHT)
     return x, y
 end
 
@@ -108,10 +104,10 @@ end
 function map.Save()
     local toSave = {
         grid           = map.grid,
-        tileSizeWIdth  = map.TILESIZEWIDTH,
-        tileSizeHeight = map.TILESIZEHEIGHT,
-        mapWidth       = map.MAPSIZEWIDTH,
-        mapHeight      = map.MAPSIZEHEIGHT
+        tileSizeWIdth  = TILE_WIDTH,
+        tileSizeHeight = TILE_HEIGHT,
+        mapWidth       = MAP_WIDTH,
+        mapHeight      = MAP_HEIGHT
     }
     local formatJSON = json:encode(toSave)
     local fileName = "maps/level_" .. map.currentLevel .. ".json"

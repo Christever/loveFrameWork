@@ -64,9 +64,9 @@ function tileSelector.DrawQuads()
         love.graphics.setColor(Color.BLACK)
         love.graphics.print(tostring(n), x, y + 30)
         love.graphics.setColor(Color.WHITE)
-        if x > 1800 - map.TILESIZEWIDTH then
+        if x > 1800 -TILE_WIDTH then
             x = 0
-            y = y + map.TILESIZEHEIGHT + 30
+            y = y + TILE_HEIGHT + 30
         end
     end
 
@@ -92,11 +92,11 @@ function tileSelector.Draw()
             end
         end
         love.graphics.draw(map.image, map.quads[id], x, y)
-        x = x + map.TILESIZEWIDTH + 1
+        x = x + TILE_WIDTH + 1
         c = c + 1
         if c > tileSelector.columns then
             x = tileSelector.x
-            y = y + map.TILESIZEHEIGHT + 1
+            y = y + TILE_HEIGHT + 1
             c = 1
         end
     end
@@ -118,7 +118,7 @@ end
 ---@param pTile number
 function tileSelector.ChangeTile(x, y, pTile)
     local col, lig = map.PixelToMap(x - map.decalageX, y - map.decalageY)
-    if col >= 1 and col <= map.MAPSIZEWIDTH and lig >= 1 and lig <= map.MAPSIZEHEIGHT then
+    if col >= 1 and col <= MAP_WIDTH and lig >= 1 and lig <= MAP_HEIGHT then
         map.grid[lig][col] = pTile
     end
 end
