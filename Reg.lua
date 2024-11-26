@@ -29,9 +29,16 @@ Color = {
 }
 
 
-MAP_WIDTH      = 32
-MAP_HEIGHT     = 32
+MAP_WIDTH   = 32
+MAP_HEIGHT  = 32
 
-TILE_WIDTH     = 32
-TILE_HEIGHT    = 32
+MAP_DECALX  = 30
+MAP_DECALY  = 50
 
+TILE_WIDTH  = 32
+TILE_HEIGHT = 32
+
+SOLIDTILES  = { 17, 18, 19, 20, 34 }
+
+
+TILES_IMAGE = love.graphics.newImage("assets/images/chips01.png")

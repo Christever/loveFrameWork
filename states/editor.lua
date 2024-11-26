@@ -33,7 +33,7 @@ function editor.draw()
       love.graphics.setColor(Color.GRAY)
       love.graphics.rectangle("fill", 0, 0, 800, 90)
       love.graphics.setColor(Color.GREEN)
-      love.graphics.printf(message, map.decalageX, 2, 900, "center")
+      love.graphics.printf(message, MAP_DECALX, 2, 900, "center")
       love.graphics.setColor(r, g, b)
     end
   else

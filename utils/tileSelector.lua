@@ -15,7 +15,7 @@ tileSelector.columns     = 6
 
 -- Tiles slectionnables
 tileSelector.tiles       = { 17, 18, 19, 20, 21, 22, 23, 24, 34, 58, 59, 60, 321, 322, 323, 324 }
-tileSelector.solid       = {}
+
 
 tileSelector.currentTile = tileSelector.tiles[1]
 
@@ -91,7 +91,7 @@ function tileSelector.Draw()
                 love.graphics.setColor(Color.BLANK)
             end
         end
-        love.graphics.draw(map.image, map.quads[id], x, y)
+        love.graphics.draw(TILES_IMAGE, map.quads[id], x, y)
         x = x + TILE_WIDTH + 1
         c = c + 1
         if c > tileSelector.columns then
@@ -117,7 +117,7 @@ end
 ---@param y number
 ---@param pTile number
 function tileSelector.ChangeTile(x, y, pTile)
-    local col, lig = map.PixelToMap(x - map.decalageX, y - map.decalageY)
+    local col, lig = map.PixelToMap(x - MAP_DECALX, y - MAP_DECALY)
     if col >= 1 and col <= MAP_WIDTH and lig >= 1 and lig <= MAP_HEIGHT then
         map.grid[lig][col] = pTile
     end

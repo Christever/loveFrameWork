@@ -1,17 +1,30 @@
-local map          = {}
+local map  = {}
 
-local json         = require("utils.JSON2")
+local json = require("utils.JSON2")
 
+map.quads        = {}
+map.grid         = {}
 
-map.image          = love.graphics.newImage("assets/images/chips01.png")
-map.quads          = {}
-map.grid           = {}
-map.decalageX      = 30 -- Decalage affichage de la map sur les X
-map.decalageY      = 50 -- Decalage affichage de la map sur les Y
-
-map.currentLevel   = 1
+map.currentLevel = 1
 
 
+
+function map.IsSolid(c, l)
+    local id = map.grid[l][c]
+    for n = 1, #SOLIDTILES do
+        if id == SOLIDTILES[n] then
+            return true
+        end
+    end
+    return false
+end
+
+function map.IsValidPosition(c, l)
+    if c >= 1 and c <= MAP_WIDTH and l >= 1 and l <= MAP_HEIGHT then
+        return true
+    end
+    return false
+end
 
 --- Initialisation de la carte
 function map.Init()
@@ -26,9 +39,9 @@ function map.Draw()
         for c = 1, MAP_WIDTH do
             local x, y = map.MapToPixel(c, l)
             local id = map.grid[l][c]
-            love.graphics.draw(map.image, map.quads[33], x + map.decalageX, y + map.decalageY)
+            love.graphics.draw(TILES_IMAGE, map.quads[33], x + MAP_DECALX, y + MAP_DECALY)
             if id ~= nil and id ~= 0 then
-                love.graphics.draw(map.image, map.quads[id], x + map.decalageX, y + map.decalageY)
+                love.graphics.draw(TILES_IMAGE, map.quads[id], x +MAP_DECALX, y + MAP_DECALY)
             end
         end
     end
@@ -49,8 +62,8 @@ end
 function map.Quads()
     local quads   = {}
     local x, y    = 0, 0
-    local width   = map.image:getWidth()
-    local height  = map.image:getHeight()
+    local width   = TILES_IMAGE:getWidth()
+    local height  = TILES_IMAGE:getHeight()
     local nbQuads = (width / TILE_WIDTH) * (height / TILE_HEIGHT)
     for q = 1, nbQuads do
         quads[q] = love.graphics.newQuad(

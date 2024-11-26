@@ -1,6 +1,6 @@
 local game = {}
 local map
-local chip = {}
+local chip = require("objects.player")
 local function loseGame()
 
 end
@@ -8,16 +8,15 @@ end
 function game.load()
   map = require("objects.map")
   map.Init()
-  chip.colonne = 1
-  chip.ligne   = 1
+  chip.Init(1,1)
 end
 
 function game.draw()
-  local x = (chip.colonne - 1) * TILE_WIDTH
-  local y = (chip.ligne - 1) * TILE_HEIGHT
+  -- local x = (chip.colonne - 1) * TILE_WIDTH + MAP_DECALX
+  -- local y = (chip.ligne - 1) * TILE_HEIGHT + MAP_DECALY
   love.graphics.setFont(fontLarge)
   map.Draw()
-  love.graphics.draw(map.image, map.quads[369], x+map.decalageX, y+map.decalageY)
+
 end
 
 function game.update(dt)
